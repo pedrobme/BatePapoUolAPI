@@ -23,9 +23,10 @@ const tryToInsertOneNewParticipant = async (req, res) => {
 	}
 };
 
-const tryToGetAllParticipantsList = (req, res) => {
+const tryToGetAllParticipantsList = async (req, res) => {
 	try {
-		const allParticipantsList = participantsService.demandAllParticipantsList();
+		const allParticipantsList =
+			await participantsService.demandAllParticipantsList();
 
 		res.status(200).send(allParticipantsList);
 	} catch (err) {

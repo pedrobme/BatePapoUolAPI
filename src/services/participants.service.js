@@ -15,7 +15,7 @@ const verifyIfNewPaticipantNameAlreadyExists = async (newParticipantName) => {
 	}
 };
 
-const demandOneParticipantInsertion = (newParticipantObject) => {
+const demandOneParticipantInsertion = async (newParticipantObject) => {
 	const addedParticipant =
 		participantsRepository.insertOneParticipant(newParticipantObject);
 
