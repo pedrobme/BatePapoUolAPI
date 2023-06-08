@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import participantsRouter from "./routers/participants.router.js";
-import { participantsCollection } from "./config/database.js";
 import messagesRouter from "./routers/messages.router.js";
 
 const app = express();
@@ -19,25 +18,7 @@ app
 // 	const newMessage = req.body;
 // 	const sender = req.headers.user;
 
-// 	const validation = newMessageSchema.validate(newMessage, {
-// 		abortEarly: false,
-// 	});
-
-// 	if (validation.error) {
-// 		const errors = validation.error.details.map((detail) => detail.message);
-// 		res.status(422).send(errors);
-// 		return;
-// 	}
-
 // 	try {
-// 		const senderExists = await participantsCollection.findOne({ name: sender });
-
-// 		if (!senderExists) {
-// 			res
-// 				.status(422)
-// 				.send("user is not logged in, please refresh your connection");
-// 			return;
-// 		}
 
 // 		messagesCollection.insertOne({
 // 			...newMessage,
@@ -50,40 +31,6 @@ app
 // 		console.log(findError);
 // 		res.status(503).send("Database server is not responding");
 // 		return;
-// 	}
-// });
-
-// app.get("/messages", async (req, res) => {
-// 	const username = req.headers.user;
-
-// 	try {
-// 		const messagesList = await messagesCollection.find({}).toArray();
-
-// 		if (req.query.limit < 1 || req.query.limit > messagesList.length) {
-// 			res.status(400).send("invalid limit");
-// 			return;
-// 		}
-
-// 		const userMessages = messagesList.filter((messageObj) => {
-// 			if (messageObj.type === "private_message") {
-// 				return messageObj.to === username || messageObj.from === username;
-// 			}
-// 			return true;
-// 		});
-
-// 		if (!req.query.limit) {
-// 			res.status(201).send(userMessages);
-// 			return;
-// 		}
-
-// 		const limitedUserMessagesList = messagesList.slice(
-// 			messagesList.length - req.query.limit
-// 		);
-
-// 		res.status(200).send(limitedUserMessagesList);
-// 	} catch (findError) {
-// 		console.log(findError);
-// 		res.status(503).send("Database server is not responding");
 // 	}
 // });
 

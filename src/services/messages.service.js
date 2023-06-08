@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import messagesRepository from "../repositories/messages.repository.js";
 
 const demandAllUserMessages = async (username) => {
@@ -40,9 +41,20 @@ const demandLimitedNumberOfUserMessages = async (username, limitNumber) => {
 	return reducedUserMessagesList;
 };
 
+const demandNewMessageInsertion = async (sender, newMessage) => {
+	const messageObject = {
+		...newMessage,
+		from: sender,
+		time: dayjs().format("HH:mm:ss"),
+	};
+
+	await messagesRepository.insertOneMessage(messageObject);
+};
+
 const messagesService = {
 	demandAllUserMessages,
 	demandLimitedNumberOfUserMessages,
+	demandNewMessageInsertion,
 };
 
 export default messagesService;

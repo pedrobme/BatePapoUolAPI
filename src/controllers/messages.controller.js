@@ -1,3 +1,4 @@
+import messagesRepository from "../repositories/messages.repository.js";
 import messagesService from "../services/messages.service.js";
 
 const tryToGetUserMessagesList = async (req, res) => {
@@ -27,6 +28,19 @@ const tryToGetUserMessagesList = async (req, res) => {
 	}
 };
 
-const messagesController = { tryToGetUserMessagesList };
+const tryToInsertOneMessage = async (req, res) => {
+	try {
+		const newMessage = req.body;
+		const sender = req.headers.user;
+
+		messagesService.demandNewMessageInsertion(sender, newMessage);
+
+		res.sendStatus(201);
+	} catch (err) {
+		res.status(500).send(err.message);
+	}
+};
+
+const messagesController = { tryToGetUserMessagesList, tryToInsertOneMessage };
 
 export default messagesController;

@@ -38,10 +38,17 @@ const demandAllParticipantsList = () => {
 	return allParticipantsList;
 };
 
+const demandOneParticipantByName = async (name) => {
+	const userObject = await participantsRepository.findParticipantByName(name);
+
+	return userObject;
+};
+
 const participantsService = {
 	verifyIfNewPaticipantNameAlreadyExists,
 	demandOneParticipantInsertion,
 	demandAllParticipantsList,
+	demandOneParticipantByName,
 };
 
 export default participantsService;
