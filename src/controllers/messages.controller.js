@@ -6,7 +6,6 @@ const tryToGetUserMessagesList = async (req, res) => {
 		const username = req.headers.user;
 		const numberOfDisplayedMessages = req.query.limit;
 
-		console.log(numberOfDisplayedMessages);
 		let userMessages;
 
 		if (!numberOfDisplayedMessages) {

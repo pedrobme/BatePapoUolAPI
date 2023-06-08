@@ -23,10 +23,20 @@ const findAllParticipants = async () => {
 	return participantsList;
 };
 
+const updateOneParticipantStatus = async (userObject) => {
+	const updatedUser = await participantsCollection.updateOne(
+		{ _id: userObject._id },
+		{ $set: { lastStatus: Date.now() } }
+	);
+
+	return updatedUser;
+};
+
 const participantsRepository = {
 	findParticipantByName,
 	insertOneParticipant,
 	findAllParticipants,
+	updateOneParticipantStatus,
 };
 
 export default participantsRepository;

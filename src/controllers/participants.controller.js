@@ -1,3 +1,4 @@
+import participantsRepository from "../repositories/participants.repository.js";
 import participantsService from "../services/participants.service.js";
 
 const tryToInsertOneNewParticipant = async (req, res) => {
@@ -58,10 +59,27 @@ const checkIfParticipantIsActive = async (req, res, next) => {
 	}
 };
 
+const updateUserStatus = async (req, res) => {
+	try {
+		const username = req.headers.user;
+
+		const userObject = await participantsService.demandOneParticipantByName(
+			username
+		);
+
+		await participantsRepository.updateOneParticipantStatus(userObject);
+
+		res.sendStatus(200);
+	} catch (err) {
+		res.status(500).send(err.message);
+	}
+};
+
 const participantsController = {
 	tryToInsertOneNewParticipant,
 	tryToGetAllParticipantsList,
 	checkIfParticipantIsActive,
+	updateUserStatus,
 };
 
 export default participantsController;
