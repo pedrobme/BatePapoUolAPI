@@ -3,6 +3,7 @@ import cors from "cors";
 import participantsRouter from "./routers/participants.router.js";
 import messagesRouter from "./routers/messages.router.js";
 import statusRouter from "./routers/statusRouter.js";
+import { participantsCollection } from "./config/database.js";
 
 const app = express();
 app.use(express.json());
