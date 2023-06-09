@@ -11,3 +11,6 @@ Some Features:
 - Control the delivery of messages individually for each user, delivering to the user only what he can see (private messages to other users aren't delivered).
 - Delete participants in the middle for more than 15 seconds.
 - Check which participants are active every 15 seconds for deletion.
+
+# Be careful!
+# The messages are saved in the database and displayed to other users of the service. Do not write what may be offensive or sensitive data.
