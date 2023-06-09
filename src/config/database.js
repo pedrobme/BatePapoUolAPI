@@ -1,8 +1,16 @@
 import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import path from "path";
 
-const mongoClient = new MongoClient(
-	"mongodb+srv://pedrobme:HSQYDH6eAkvw0OxX@batepapodb.eqjmedd.mongodb.net/?retryWrites=true&w=majority"
-);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, "../../.env") });
+
+const MONGO_DB_URI = process.env.MONGO_DB_URI;
+
+const mongoClient = new MongoClient(MONGO_DB_URI);
 let db;
 
 try {
