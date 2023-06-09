@@ -1,5 +1,7 @@
 # BatePapoUOL API
 
+This is a online chat with inspired on "Bate Papo UOL" a brazilian famous chat service.
+
 This is the API of the BatePapoUOL project. This API is developed with NodeJS, Express, and MongoDB.
 
 Some Features:
