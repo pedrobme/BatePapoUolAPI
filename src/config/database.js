@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 const mongoClient = new MongoClient(
-	"mongodb+srv://pedrobme:eiNI9UGd6ZPZH8B6@batepapodb.eqjmedd.mongodb.net/?retryWrites=true&w=majority"
+	"mongodb+srv://pedrobme:HSQYDH6eAkvw0OxX@batepapodb.eqjmedd.mongodb.net/?retryWrites=true&w=majority"
 );
 let db;
 
