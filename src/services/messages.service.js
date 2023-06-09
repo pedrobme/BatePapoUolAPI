@@ -1,5 +1,10 @@
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc.js";
+import timezone from "dayjs/plugin/timezone.js";
 import messagesRepository from "../repositories/messages.repository.js";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const demandAllUserMessages = async (userId) => {
 	const allMessagesList = await messagesRepository.getAllUserMessages(userId);
@@ -25,7 +30,7 @@ const demandNewMessageInsertion = async (
 		from: sender,
 		senderId: senderId,
 		receiverId: receiverId,
-		time: dayjs().format("HH:mm:ss"),
+		time: dayjs().tz("America/Fortaleza").format("HH:mm:ss"),
 	};
 
 	await messagesRepository.insertOneMessage(messageObject);

@@ -1,6 +1,11 @@
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc.js";
+import timezone from "dayjs/plugin/timezone.js";
 import messagesRepository from "../repositories/messages.repository.js";
 import participantsRepository from "../repositories/participants.repository.js";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const verifyIfNewPaticipantNameAlreadyExists = async (newParticipantName) => {
 	const nameAlreadyInUse = await participantsRepository.findParticipantByName(
@@ -24,7 +29,7 @@ const demandOneParticipantInsertion = async (newParticipantObject) => {
 		to: "Todos",
 		text: "entra na sala...",
 		type: "status",
-		time: dayjs().format("HH:mm:ss"),
+		time: dayjs().tz("America/Fortaleza").format("HH:mm:ss"),
 	};
 
 	messagesRepository.insertOneMessage(newMessage);

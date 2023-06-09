@@ -8,6 +8,11 @@ import {
 	participantsCollection,
 } from "./config/database.js";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc.js";
+import timezone from "dayjs/plugin/timezone.js";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const app = express();
 app.use(express.json());
@@ -36,7 +41,7 @@ setInterval(async () => {
 				to: "Todos",
 				text: "sai da sala...",
 				type: "status",
-				time: dayjs().format("HH:mm:ss"),
+				time: dayjs().tz("America/Fortaleza").format("HH:mm:ss"),
 			};
 
 			await messagesCollection.insertOne(newMessage);
