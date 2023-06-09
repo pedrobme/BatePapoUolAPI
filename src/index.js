@@ -21,31 +21,31 @@ app
 	.use("/messages", messagesRouter)
 	.use("/status", statusRouter);
 
-// setInterval(async () => {
-// 	try {
-// 		const participantsList = await participantsCollection.find({}).toArray();
-// 		const expiredLoginParticipants = participantsList.filter((participant) => {
-// 			return participant.lastStatus < Date.now() - 10000;
-// 		});
+setInterval(async () => {
+	try {
+		const participantsList = await participantsCollection.find({}).toArray();
+		const expiredLoginParticipants = participantsList.filter((participant) => {
+			return participant.lastStatus < Date.now() - 10000;
+		});
 
-// 		expiredLoginParticipants.forEach(async (participant) => {
-// 			await participantsCollection.deleteOne({ _id: participant._id });
+		expiredLoginParticipants.forEach(async (participant) => {
+			await participantsCollection.deleteOne({ _id: participant._id });
 
-// 			const newMessage = {
-// 				from: participant.name,
-// 				to: "Todos",
-// 				text: "sai da sala...",
-// 				type: "status",
-// 				time: dayjs().format("HH:mm:ss"),
-// 			};
+			const newMessage = {
+				from: participant.name,
+				to: "Todos",
+				text: "sai da sala...",
+				type: "status",
+				time: dayjs().format("HH:mm:ss"),
+			};
 
-// 			await messagesCollection.insertOne(newMessage);
-// 		});
+			await messagesCollection.insertOne(newMessage);
+		});
 
-// 		console.log("iddle participants deleted successfully");
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// }, 15000);
+		console.log("iddle participants deleted successfully");
+	} catch (error) {
+		console.log(error);
+	}
+}, 15000);
 
 app.listen(5000, () => console.log("server running at port 5000"));
