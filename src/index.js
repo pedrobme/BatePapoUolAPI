@@ -3,7 +3,11 @@ import cors from "cors";
 import participantsRouter from "./routers/participants.router.js";
 import messagesRouter from "./routers/messages.router.js";
 import statusRouter from "./routers/statusRouter.js";
-import { participantsCollection } from "./config/database.js";
+import {
+	messagesCollection,
+	participantsCollection,
+} from "./config/database.js";
+import dayjs from "dayjs";
 
 const app = express();
 app.use(express.json());
@@ -26,6 +30,16 @@ setInterval(async () => {
 
 		expiredLoginParticipants.forEach(async (participant) => {
 			await participantsCollection.deleteOne({ _id: participant._id });
+
+			const newMessage = {
+				from: participant.name,
+				to: "Todos",
+				text: "sai da sala...",
+				type: "status",
+				time: dayjs().format("HH:mm:ss"),
+			};
+
+			await messagesCollection.insertOne(newMessage);
 		});
 
 		console.log("iddle participants deleted successfully");
