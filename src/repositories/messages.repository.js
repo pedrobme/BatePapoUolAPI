@@ -6,12 +6,32 @@ const insertOneMessage = async (messageObject) => {
 	return addedMessage;
 };
 
-const getAllMessages = async () => {
-	const allMessages = await messagesCollection.find({}).toArray();
+const getAllUserMessages = async (userId) => {
+	const query = {
+		$or: [{ senderId: userId }, { receiverId: userId }, { to: "Todos" }],
+	};
+
+	const allMessages = await messagesCollection.find(query).toArray();
 
 	return allMessages;
 };
 
-const messagesRepository = { insertOneMessage, getAllMessages };
+const getAllUserMessagesWithLimit = async (userId, limitNumber) => {
+	const query = {
+		$or: [{ senderId: userId }, { receiverId: userId }, { to: "Todos" }],
+	};
+
+	const options = { limit: limitNumber };
+
+	const allMessages = await messagesCollection.find(query, options).toArray();
+
+	return allMessages;
+};
+
+const messagesRepository = {
+	insertOneMessage,
+	getAllUserMessages,
+	getAllUserMessagesWithLimit,
+};
 
 export default messagesRepository;

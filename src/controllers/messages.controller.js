@@ -1,19 +1,18 @@
-import messagesRepository from "../repositories/messages.repository.js";
 import messagesService from "../services/messages.service.js";
 
 const tryToGetUserMessagesList = async (req, res) => {
 	try {
-		const username = req.headers.user;
+		const userId = req.headers["user-id"];
 		const numberOfDisplayedMessages = req.query.limit;
 
 		let userMessages;
 
 		if (!numberOfDisplayedMessages) {
-			userMessages = await messagesService.demandAllUserMessages(username);
+			userMessages = await messagesService.demandAllUserMessages(userId);
 		}
 
 		userMessages = await messagesService.demandLimitedNumberOfUserMessages(
-			username,
+			userId,
 			numberOfDisplayedMessages
 		);
 
@@ -31,8 +30,15 @@ const tryToInsertOneMessage = async (req, res) => {
 	try {
 		const newMessage = req.body;
 		const sender = req.headers.user;
+		const senderId = req.headers["sender-id"];
+		const receiverId = req.headers["receiver-id"];
 
-		messagesService.demandNewMessageInsertion(sender, newMessage);
+		messagesService.demandNewMessageInsertion(
+			sender,
+			senderId,
+			receiverId,
+			newMessage
+		);
 
 		res.sendStatus(201);
 	} catch (err) {

@@ -1,50 +1,30 @@
 import dayjs from "dayjs";
 import messagesRepository from "../repositories/messages.repository.js";
 
-const demandAllUserMessages = async (username) => {
-	const allMessagesList = await messagesRepository.getAllMessages();
+const demandAllUserMessages = async (userId) => {
+	const allMessagesList = await messagesRepository.getAllUserMessages(userId);
 
-	const userMessagesList = allMessagesList.filter((messageObj) => {
-		if (messageObj.type === "private_message") {
-			return messageObj.to === username || messageObj.from === username;
-		}
-
-		return true;
-	});
-
-	return userMessagesList;
+	return allMessagesList;
 };
 
-const demandLimitedNumberOfUserMessages = async (username, limitNumber) => {
-	const allMessagesList = await messagesRepository.getAllMessages();
+const demandLimitedNumberOfUserMessages = async (userId, limitNumber) => {
+	const allUserMessagesList =
+		await messagesRepository.getAllUserMessagesWithLimit(userId, limitNumber);
 
-	if (limitNumber < 1 || limitNumber > allMessagesList.length) {
-		throw {
-			name: "badRequest",
-			message:
-				"Invalid limit number, the number must be between 1 and the total of messages avaible.",
-		};
-	}
-
-	const userMessages = allMessagesList.filter((messageObj) => {
-		if (messageObj.type === "private_message") {
-			return messageObj.to === username || messageObj.from === username;
-		}
-
-		return true;
-	});
-
-	const reducedUserMessagesList = userMessages.slice(
-		allMessagesList.length - limitNumber
-	);
-
-	return reducedUserMessagesList;
+	return allUserMessagesList;
 };
 
-const demandNewMessageInsertion = async (sender, newMessage) => {
+const demandNewMessageInsertion = async (
+	sender,
+	senderId,
+	receiverId,
+	newMessage
+) => {
 	const messageObject = {
 		...newMessage,
 		from: sender,
+		senderId: senderId,
+		receiverId: receiverId,
 		time: dayjs().format("HH:mm:ss"),
 	};
 
